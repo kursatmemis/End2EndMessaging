@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/register_activity_nav"
+    app:startDestination="@id/phoneAuthRequestFragment">
+
+    <fragment
+        android:id="@+id/phoneAuthRequestFragment"
+        android:name="com.kursatmemis.end2endmessaging.view.register.fragment.PhoneAuthRequestFragment"
+        android:label="fragment_phone_auth_request"
+        tools:layout="@layout/fragment_phone_auth_request" >
+        <action
+            android:id="@+id/action_phoneAuthRequestFragment_to_codeVerificationFragment"
+            app:destination="@id/codeVerificationFragment" />
+        <action
+            android:id="@+id/action_phoneAuthRequestFragment_to_profileSetupFragment"
+            app:destination="@id/profileSetupFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/codeVerificationFragment"
+        android:name="com.kursatmemis.end2endmessaging.view.register.fragment.CodeVerificationFragment"
+        android:label="fragment_code_verification"
+        tools:layout="@layout/fragment_code_verification" >
+        <argument
+            android:name="verificationId"
+            app:argType="string" />
+        <action
+            android:id="@+id/action_codeVerificationFragment_to_profileSetupFragment"
+            app:destination="@id/profileSetupFragment" />
+        <argument
+            android:name="phoneNumber"
+            app:argType="string" />
+    </fragment>
+    <fragment
+        android:id="@+id/profileSetupFragment"
+        android:name="com.kursatmemis.end2endmessaging.view.register.fragment.ProfileSetupFragment"
+        android:label="fragment_profile_setup"
+        tools:layout="@layout/fragment_profile_setup" >
+        <argument
+            android:name="phoneNumber"
+            app:argType="string" />
+    </fragment>
+</navigation>

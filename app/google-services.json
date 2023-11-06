@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "76353123284",
+    "project_id": "bitirmeprojesi-75d15",
+    "storage_bucket": "bitirmeprojesi-75d15.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:76353123284:android:e019883d7cd4f457a81c41",
+        "android_client_info": {
+          "package_name": "com.kursatmemis.end2endmessaging"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAuCZD8Qgf5POZjhqLnydUxCpnRf1MkD-Y"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
