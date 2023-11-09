@@ -1,4 +1,4 @@
-package com.kursatmemis.end2endmessaging.helper.userfeedback
+package com.kursatmemis.end2endmessaging.util.userfeedback
 
 import android.view.View
 import com.google.android.material.snackbar.Snackbar

@@ -1,5 +1,7 @@
 package com.kursatmemis.end2endmessaging.view.register.fragment
 
+import android.app.Activity
+import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Build
@@ -9,7 +11,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.RadioButton
-import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
@@ -18,16 +19,16 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
 import com.google.firebase.Timestamp
 import com.kursatmemis.end2endmessaging.databinding.FragmentProfileSetupBinding
-import com.kursatmemis.end2endmessaging.helper.ImagePickerFromGallery
-import com.kursatmemis.end2endmessaging.helper.areParamsEmpty
-import com.kursatmemis.end2endmessaging.helper.goToMainActivityAndFinishIt
-import com.kursatmemis.end2endmessaging.helper.userfeedback.AlertDialogButton
-import com.kursatmemis.end2endmessaging.helper.userfeedback.AlertDialogNegativeButton
-import com.kursatmemis.end2endmessaging.helper.userfeedback.AlertDialogPositiveButton
-import com.kursatmemis.end2endmessaging.helper.userfeedback.showAlertDialog
-import com.kursatmemis.end2endmessaging.helper.userfeedback.showToastMessage
-import com.kursatmemis.end2endmessaging.model.database.UserData
+import com.kursatmemis.end2endmessaging.util.ImagePickerFromGallery
+import com.kursatmemis.end2endmessaging.util.areParamsEmpty
+import com.kursatmemis.end2endmessaging.util.userfeedback.AlertDialogButton
+import com.kursatmemis.end2endmessaging.util.userfeedback.AlertDialogNegativeButton
+import com.kursatmemis.end2endmessaging.util.userfeedback.AlertDialogPositiveButton
+import com.kursatmemis.end2endmessaging.util.userfeedback.showAlertDialog
+import com.kursatmemis.end2endmessaging.util.userfeedback.showToastMessage
+import com.kursatmemis.end2endmessaging.model.database_model.UserData
 import com.kursatmemis.end2endmessaging.view.BaseFragment
+import com.kursatmemis.end2endmessaging.view.main.activity.MainActivity
 import com.kursatmemis.end2endmessaging.viewmodel.authentication.ProfileSetupViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -135,21 +136,21 @@ class ProfileSetupFragment : BaseFragment<FragmentProfileSetupBinding>() {
     private fun observeLiveData() {
 
         profileSetupViewModel.uploadImageResult.observe(viewLifecycleOwner) {
-            val isUploadSuccessful = it.isUploadSuccessful
+            val isUploadSuccessful = it.isSuccessful
             if (!isUploadSuccessful) {
                 val errorMessage = it.errorMessage!!
                 showToastMessage(requireContext(), errorMessage)
-            } else if (profileSetupViewModel.saveUserDataResult.value != null && profileSetupViewModel.saveUserDataResult.value!!.isSaveUserSuccess) {
+            } else if (profileSetupViewModel.registractionUserDataResult.value != null && profileSetupViewModel.registractionUserDataResult.value!!.isSuccessful) {
                 goToMainActivityAndFinishIt(requireContext(), requireActivity())
             }
         }
 
-        profileSetupViewModel.saveUserDataResult.observe(viewLifecycleOwner) {
-            val isSaveUserSuccess = it.isSaveUserSuccess
+        profileSetupViewModel.registractionUserDataResult.observe(viewLifecycleOwner) {
+            val isSaveUserSuccess = it.isSuccessful
             if (!isSaveUserSuccess) {
                 val errorMessage = it.errorMessage!!
                 showToastMessage(requireContext(), errorMessage)
-            } else if (profileSetupViewModel.uploadImageResult.value != null && profileSetupViewModel.uploadImageResult.value!!.isUploadSuccessful) {
+            } else if (profileSetupViewModel.uploadImageResult.value != null && profileSetupViewModel.uploadImageResult.value!!.isSuccessful) {
                 goToMainActivityAndFinishIt(requireContext(), requireActivity())
             }
         }
@@ -227,6 +228,12 @@ class ProfileSetupFragment : BaseFragment<FragmentProfileSetupBinding>() {
             }
         }
 
+    }
+
+    private fun goToMainActivityAndFinishIt(context: Context, activity: Activity) {
+        activity.finish()
+        val intentToMainActivity = Intent(context, MainActivity::class.java)
+        context.startActivity(intentToMainActivity)
     }
 
 }

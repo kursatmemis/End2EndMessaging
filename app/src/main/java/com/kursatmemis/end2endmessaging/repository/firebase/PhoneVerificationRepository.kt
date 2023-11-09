@@ -1,4 +1,4 @@
-package com.kursatmemis.end2endmessaging.repository.authentication
+package com.kursatmemis.end2endmessaging.repository.firebase
 
 import android.app.Activity
 import androidx.lifecycle.MutableLiveData
@@ -7,11 +7,11 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.PhoneAuthCredential
 import com.google.firebase.auth.PhoneAuthOptions
 import com.google.firebase.auth.PhoneAuthProvider
-import com.kursatmemis.end2endmessaging.model.authentication.VerificationResult
+import com.kursatmemis.end2endmessaging.model.firebase_result.VerificationResult
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
-class PhoneVerificationManager @Inject constructor(private val auth: FirebaseAuth) {
+class PhoneVerificationRepository @Inject constructor(private val auth: FirebaseAuth) {
 
     private val _verificationResult = MutableLiveData<VerificationResult>()
     val verificationResult get() = _verificationResult

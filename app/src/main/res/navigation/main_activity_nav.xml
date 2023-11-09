@@ -19,5 +19,20 @@
         android:id="@+id/peopleFragment"
         android:name="com.kursatmemis.end2endmessaging.view.main.fragment.PeopleFragment"
         android:label="fragment_people"
-        tools:layout="@layout/fragment_people" />
+        tools:layout="@layout/fragment_people" >
+        <action
+            android:id="@+id/action_peopleFragment_to_addNewPersonFragment"
+            app:destination="@id/addNewPersonFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/addNewPersonFragment"
+        android:name="com.kursatmemis.end2endmessaging.view.main.fragment.AddNewContactFragment"
+        android:label="fragment_add_new_person"
+        tools:layout="@layout/fragment_add_new_person" >
+        <action
+            android:id="@+id/action_addNewPersonFragment_to_peopleFragment"
+            app:destination="@id/peopleFragment"
+            app:popUpTo="@id/addNewPersonFragment"
+            app:popUpToInclusive="true" />
+    </fragment>
 </navigation>

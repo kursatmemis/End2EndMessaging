@@ -1,4 +1,4 @@
-package com.kursatmemis.end2endmessaging.model.authentication
+package com.kursatmemis.end2endmessaging.model.firebase_result
 
 import com.google.firebase.auth.PhoneAuthCredential
 

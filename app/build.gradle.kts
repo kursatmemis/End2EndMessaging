@@ -66,7 +66,7 @@ dependencies {
     // Navigation Component
     implementation("androidx.navigation:navigation-fragment-ktx:2.5.0")
     implementation("androidx.navigation:navigation-ui-ktx:2.5.0")
-
+    implementation("androidx.legacy:legacy-support-v4:1.0.0")
     // Hilt
     implementation("com.google.dagger:hilt-android:2.44")
     kapt("com.google.dagger:hilt-android-compiler:2.44")
@@ -76,6 +76,9 @@ dependencies {
 
     // CountryCodePicker
     implementation("com.hbb20:ccp:2.5.0")
+
+    // Glide
+    implementation("com.github.bumptech.glide:glide:4.16.0")
 
 }
 

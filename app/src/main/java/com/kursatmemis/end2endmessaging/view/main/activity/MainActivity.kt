@@ -15,7 +15,9 @@ import com.google.firebase.ktx.Firebase
 import com.kursatmemis.end2endmessaging.R
 import com.kursatmemis.end2endmessaging.databinding.ActivityMainBinding
 import com.kursatmemis.end2endmessaging.view.register.activity.RegisterActivity
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
     private lateinit var auth: FirebaseAuth

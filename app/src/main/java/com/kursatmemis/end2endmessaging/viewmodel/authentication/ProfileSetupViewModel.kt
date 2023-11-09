@@ -1,12 +1,10 @@
 package com.kursatmemis.end2endmessaging.viewmodel.authentication
 
 import android.net.Uri
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.kursatmemis.end2endmessaging.model.database.SetupProfileResult
-import com.kursatmemis.end2endmessaging.model.database.UserData
-import com.kursatmemis.end2endmessaging.repository.authentication.FirebaseStorageRepository
-import com.kursatmemis.end2endmessaging.repository.authentication.FirebaseStoreRepository
+import com.kursatmemis.end2endmessaging.model.database_model.UserData
+import com.kursatmemis.end2endmessaging.repository.firebase.FirebaseStorageRepository
+import com.kursatmemis.end2endmessaging.repository.firebase.FirebaseStoreRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
@@ -16,8 +14,8 @@ class ProfileSetupViewModel @Inject constructor(
     private val firebaseStorageRepository: FirebaseStorageRepository
 ) : ViewModel() {
 
-    val uploadImageResult = firebaseStorageRepository.uploadImageResult
-    val saveUserDataResult = firebaseStoreRepository.saveUserDataResult
+    val uploadImageResult = firebaseStorageRepository.firebaseOperationResult
+    val registractionUserDataResult = firebaseStoreRepository.firebaseOperationResult
 
 
     fun saveProfilePictureToFirebaseStorage(imageUri: Uri?, phoneNumber: String) {

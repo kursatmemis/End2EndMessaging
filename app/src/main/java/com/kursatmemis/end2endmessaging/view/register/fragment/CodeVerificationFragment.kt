@@ -11,11 +11,11 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.Navigation
 import androidx.navigation.fragment.navArgs
 import com.kursatmemis.end2endmessaging.databinding.FragmentCodeVerificationBinding
-import com.kursatmemis.end2endmessaging.helper.areParamsEmpty
-import com.kursatmemis.end2endmessaging.helper.closeKeyboard
-import com.kursatmemis.end2endmessaging.helper.userfeedback.closeProgressBar
-import com.kursatmemis.end2endmessaging.helper.userfeedback.showProgressBar
-import com.kursatmemis.end2endmessaging.helper.userfeedback.showToastMessage
+import com.kursatmemis.end2endmessaging.util.areParamsEmpty
+import com.kursatmemis.end2endmessaging.util.closeKeyboard
+import com.kursatmemis.end2endmessaging.util.userfeedback.closeProgressBar
+import com.kursatmemis.end2endmessaging.util.userfeedback.showProgressBar
+import com.kursatmemis.end2endmessaging.util.userfeedback.showToastMessage
 import com.kursatmemis.end2endmessaging.view.BaseFragment
 import com.kursatmemis.end2endmessaging.viewmodel.authentication.CodeVerificationViewModel
 import dagger.hilt.android.AndroidEntryPoint
@@ -122,7 +122,7 @@ class CodeVerificationFragment : BaseFragment<FragmentCodeVerificationBinding>()
         }
 
         codeVerificationViewModel.signInResult.observe(viewLifecycleOwner) {
-            val isSignInSuccessful = it.isSignInSuccessful
+            val isSignInSuccessful = it.isSuccessful
             if (isSignInSuccessful) {
                 navigateToProfileSetupFragmentWithPhoneNumber()
             } else {

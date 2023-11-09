@@ -1,4 +1,4 @@
-package com.kursatmemis.end2endmessaging.model.database
+package com.kursatmemis.end2endmessaging.model.database_model
 
 import com.google.firebase.Timestamp
 
@@ -12,5 +12,6 @@ data class UserData(
     val status: String? = null,
     val photoUrl: String? = null,
     val publicKey: String? = null,
-    val token: String? = null
+    val token: String? = null,
+    val contactList: ArrayList<String> = ArrayList()
 )

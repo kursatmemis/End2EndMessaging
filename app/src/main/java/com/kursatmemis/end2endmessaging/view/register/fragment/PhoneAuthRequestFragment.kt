@@ -6,11 +6,11 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.Navigation
 import com.kursatmemis.end2endmessaging.R
 import com.kursatmemis.end2endmessaging.databinding.FragmentPhoneAuthRequestBinding
-import com.kursatmemis.end2endmessaging.helper.areParamsEmpty
-import com.kursatmemis.end2endmessaging.helper.closeKeyboard
-import com.kursatmemis.end2endmessaging.helper.userfeedback.closeProgressBar
-import com.kursatmemis.end2endmessaging.helper.userfeedback.showProgressBar
-import com.kursatmemis.end2endmessaging.helper.userfeedback.showToastMessage
+import com.kursatmemis.end2endmessaging.util.areParamsEmpty
+import com.kursatmemis.end2endmessaging.util.closeKeyboard
+import com.kursatmemis.end2endmessaging.util.userfeedback.closeProgressBar
+import com.kursatmemis.end2endmessaging.util.userfeedback.showProgressBar
+import com.kursatmemis.end2endmessaging.util.userfeedback.showToastMessage
 import com.kursatmemis.end2endmessaging.view.BaseFragment
 import com.kursatmemis.end2endmessaging.viewmodel.authentication.PhoneAuthRequestViewModel
 import dagger.hilt.android.AndroidEntryPoint
@@ -74,7 +74,7 @@ class PhoneAuthRequestFragment : BaseFragment<FragmentPhoneAuthRequestBinding>()
         }
 
         phoneAuthRequestViewModel.signInResult.observe(viewLifecycleOwner) {
-            val isSignInSuccessful = it.isSignInSuccessful
+            val isSignInSuccessful = it.isSuccessful
             if (isSignInSuccessful) {
                 // Telefon numarasını doğrulamak için kod göndermeye gerek kalmadı.
                 navigateToProfileSetupFragment()

@@ -2,30 +2,30 @@ package com.kursatmemis.end2endmessaging.viewmodel.authentication
 
 import android.app.Activity
 import androidx.lifecycle.ViewModel
-import com.kursatmemis.end2endmessaging.repository.authentication.PhoneVerificationManager
-import com.kursatmemis.end2endmessaging.repository.authentication.SignInWithPhoneNumberManager
+import com.kursatmemis.end2endmessaging.repository.firebase.PhoneVerificationRepository
+import com.kursatmemis.end2endmessaging.repository.firebase.SignInWithPhoneNumberRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
 @HiltViewModel
 class CodeVerificationViewModel @Inject constructor(
-    private val phoneVerificationManager: PhoneVerificationManager,
-    private val signInWithPhoneNumberManager: SignInWithPhoneNumberManager
+    private val phoneVerificationRepository: PhoneVerificationRepository,
+    private val signInWithPhoneNumberRepository: SignInWithPhoneNumberRepository
 ) : ViewModel() {
 
-    val signInResult = signInWithPhoneNumberManager.signInResult
-    val verificationResult = phoneVerificationManager.verificationResult
+    val signInResult = signInWithPhoneNumberRepository.signInResult
+    val verificationResult = phoneVerificationRepository.verificationResult
 
     fun signInWithPhoneAuthCredential(verificationId: String, enteredCode: String) {
-        val credential = signInWithPhoneNumberManager.getPhoneAuthCredential(
+        val credential = signInWithPhoneNumberRepository.getPhoneAuthCredential(
             verificationId,
             enteredCode
         )
-        signInWithPhoneNumberManager.signInWithPhoneAuthCredential(credential)
+        signInWithPhoneNumberRepository.signInWithPhoneAuthCredential(credential)
     }
 
     fun verifyPhoneNumber(phoneNumber: String, activity: Activity) {
-        phoneVerificationManager.verifyPhoneNumber(phoneNumber, activity)
+        phoneVerificationRepository.verifyPhoneNumber(phoneNumber, activity)
     }
 
 }

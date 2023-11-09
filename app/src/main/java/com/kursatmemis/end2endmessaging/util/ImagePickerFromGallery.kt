@@ -1,4 +1,4 @@
-package com.kursatmemis.end2endmessaging.helper
+package com.kursatmemis.end2endmessaging.util
 
 import android.Manifest
 import android.app.Activity
@@ -12,8 +12,8 @@ import androidx.activity.result.ActivityResultLauncher
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.google.android.material.snackbar.Snackbar
-import com.kursatmemis.end2endmessaging.helper.userfeedback.SnackBarAction
-import com.kursatmemis.end2endmessaging.helper.userfeedback.showSnackBar
+import com.kursatmemis.end2endmessaging.util.userfeedback.SnackBarAction
+import com.kursatmemis.end2endmessaging.util.userfeedback.showSnackBar
 
 class ImagePickerFromGallery(
     private val context: Context,
