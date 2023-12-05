@@ -15,7 +15,7 @@ class ProfileSetupViewModel @Inject constructor(
 ) : ViewModel() {
 
     val uploadImageResult = firebaseStorageRepository.firebaseOperationResult
-    val registractionUserDataResult = firebaseStoreRepository.firebaseOperationResult
+    val registractionUserDataResult = firebaseStoreRepository.userServiceResult
 
 
     fun saveProfilePictureToFirebaseStorage(imageUri: Uri?, phoneNumber: String) {

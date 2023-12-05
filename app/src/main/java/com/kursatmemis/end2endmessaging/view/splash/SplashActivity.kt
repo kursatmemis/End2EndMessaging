@@ -10,16 +10,18 @@ import com.google.firebase.ktx.Firebase
 import com.kursatmemis.end2endmessaging.R
 import com.kursatmemis.end2endmessaging.view.main.activity.MainActivity
 import com.kursatmemis.end2endmessaging.view.register.activity.RegisterActivity
+import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
+@AndroidEntryPoint
 class SplashActivity : AppCompatActivity() {
 
-    private lateinit var auth: FirebaseAuth
+    @Inject
+    lateinit var auth: FirebaseAuth
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_splash)
-
-        auth = Firebase.auth
     }
 
     override fun onStart() {

@@ -7,6 +7,7 @@ import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.provider.MediaStore
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -27,6 +28,9 @@ import com.kursatmemis.end2endmessaging.util.userfeedback.AlertDialogPositiveBut
 import com.kursatmemis.end2endmessaging.util.userfeedback.showAlertDialog
 import com.kursatmemis.end2endmessaging.util.userfeedback.showToastMessage
 import com.kursatmemis.end2endmessaging.model.database_model.UserData
+import com.kursatmemis.end2endmessaging.util.closeKeyboard
+import com.kursatmemis.end2endmessaging.util.userfeedback.closeProgressBar
+import com.kursatmemis.end2endmessaging.util.userfeedback.showProgressBar
 import com.kursatmemis.end2endmessaging.view.BaseFragment
 import com.kursatmemis.end2endmessaging.view.main.activity.MainActivity
 import com.kursatmemis.end2endmessaging.viewmodel.authentication.ProfileSetupViewModel
@@ -41,7 +45,6 @@ class ProfileSetupFragment : BaseFragment<FragmentProfileSetupBinding>() {
     private lateinit var permissionLauncher: ActivityResultLauncher<String>
     private lateinit var phoneNumber: String
     private var imageUri: Uri? = null
-
     // Back tuşuna basıldığında tetiklenen işlemi yöneten bir geri çağırma
     private lateinit var backPressHandler: OnBackPressedCallback
 
@@ -101,11 +104,14 @@ class ProfileSetupFragment : BaseFragment<FragmentProfileSetupBinding>() {
         }
 
         binding.saveButton.setOnClickListener {
+            showProgressBar(binding.progressBar4)
+            closeKeyboard(requireActivity(), requireContext())
             val name = binding.nameEditText.text.toString()
             val about = binding.aboutEditText.text.toString()
             val isEmpty = areParamsEmpty(name, about)
 
             if (isEmpty) {
+                Log.w("mKm-text-x", "geldi")
                 val title = "Empty Fields"
                 val message =
                     "There are empty fields on your profile. Do you still want to continue?"
@@ -123,6 +129,7 @@ class ProfileSetupFragment : BaseFragment<FragmentProfileSetupBinding>() {
                 }
                 val alertDialogButton = AlertDialogButton(positiveButton, negativeButton)
                 showAlertDialog(requireContext(), title, message, alertDialogButton)
+                closeProgressBar(binding.progressBar4)
             } else {
                 // FirebaseStora'a kaydet.
                 val userData = getUserData()
@@ -138,17 +145,18 @@ class ProfileSetupFragment : BaseFragment<FragmentProfileSetupBinding>() {
         profileSetupViewModel.uploadImageResult.observe(viewLifecycleOwner) {
             val isUploadSuccessful = it.isSuccessful
             if (!isUploadSuccessful) {
-                val errorMessage = it.errorMessage!!
+                val errorMessage = it.errorMessage ?: "Unknown Error"
                 showToastMessage(requireContext(), errorMessage)
             } else if (profileSetupViewModel.registractionUserDataResult.value != null && profileSetupViewModel.registractionUserDataResult.value!!.isSuccessful) {
                 goToMainActivityAndFinishIt(requireContext(), requireActivity())
             }
+            closeProgressBar(binding.progressBar4)
         }
 
         profileSetupViewModel.registractionUserDataResult.observe(viewLifecycleOwner) {
             val isSaveUserSuccess = it.isSuccessful
             if (!isSaveUserSuccess) {
-                val errorMessage = it.errorMessage!!
+                val errorMessage = it.errorMessage ?: "Unknown Error"
                 showToastMessage(requireContext(), errorMessage)
             } else if (profileSetupViewModel.uploadImageResult.value != null && profileSetupViewModel.uploadImageResult.value!!.isSuccessful) {
                 goToMainActivityAndFinishIt(requireContext(), requireActivity())
@@ -174,7 +182,7 @@ class ProfileSetupFragment : BaseFragment<FragmentProfileSetupBinding>() {
         val publicKey = "publicKey"
         val token = "token"
 
-        val userData = UserData(
+        return UserData(
             id,
             phoneNumber,
             createdAt,
@@ -186,8 +194,6 @@ class ProfileSetupFragment : BaseFragment<FragmentProfileSetupBinding>() {
             publicKey,
             token
         )
-
-        return userData
 
     }
 

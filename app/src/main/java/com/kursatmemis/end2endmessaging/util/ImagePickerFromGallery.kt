@@ -30,7 +30,6 @@ class ImagePickerFromGallery(
                 Manifest.permission.READ_EXTERNAL_STORAGE
             ) != PackageManager.PERMISSION_GRANTED
         ) {
-            Log.w("mKm - izin", "burda")
             // Izin verilmemiş.
             if (ActivityCompat.shouldShowRequestPermissionRationale(
                     activity,
@@ -48,7 +47,6 @@ class ImagePickerFromGallery(
                 )
             } else {
                 // Izin isterken kullanıcıya bir mantık göstermemize gerek yok.
-
                 permissionLauncher.launch(Manifest.permission.READ_EXTERNAL_STORAGE)
             }
         } else {
@@ -66,7 +64,6 @@ class ImagePickerFromGallery(
                 Manifest.permission.READ_MEDIA_IMAGES
             ) != PackageManager.PERMISSION_GRANTED
         ) {
-            Log.w("mKm - izin", "burda2")
             // Izin verilmemiş.
             if (ActivityCompat.shouldShowRequestPermissionRationale(
                     activity,

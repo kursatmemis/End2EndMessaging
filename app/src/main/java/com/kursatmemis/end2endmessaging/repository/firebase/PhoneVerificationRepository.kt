@@ -44,5 +44,4 @@ class PhoneVerificationRepository @Inject constructor(private val auth: Firebase
         PhoneAuthProvider.verifyPhoneNumber(options)
     }
 
-
 }

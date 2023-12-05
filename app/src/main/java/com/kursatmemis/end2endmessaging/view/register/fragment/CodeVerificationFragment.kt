@@ -61,7 +61,6 @@ class CodeVerificationFragment : BaseFragment<FragmentCodeVerificationBinding>()
         startCountDownTimer()
 
         binding.resendCodeTextView.setOnClickListener {
-            Log.w("mKm - phoneNumber: ", phoneNumber)
             showProgressBar(binding.progressBar2)
             codeVerificationViewModel.verifyPhoneNumber(phoneNumber, requireActivity())
         }

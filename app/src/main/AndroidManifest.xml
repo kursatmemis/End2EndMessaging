@@ -17,6 +17,9 @@
         android:theme="@style/Theme.End2EndMessaging"
         tools:targetApi="31">
         <activity
+            android:name=".view.main.activity.ChatChannelActivity"
+            android:exported="false" />
+        <activity
             android:name=".view.splash.SplashActivity"
             android:exported="true">
             <intent-filter>

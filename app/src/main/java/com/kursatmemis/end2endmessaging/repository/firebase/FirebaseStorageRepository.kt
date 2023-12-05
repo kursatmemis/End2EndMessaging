@@ -1,6 +1,7 @@
 package com.kursatmemis.end2endmessaging.repository.firebase
 
 import android.net.Uri
+import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import com.google.firebase.storage.FirebaseStorage
 import com.kursatmemis.end2endmessaging.model.firebase_result.FirebaseOperationResult
@@ -29,7 +30,7 @@ class FirebaseStorageRepository @Inject constructor(firebaseStorage: FirebaseSto
                 .addOnFailureListener {
                     isUploadSuccessful = false
                     errorMessage = it.message ?: "Unknown Error"
-                    _firebaseOperationResult.value = FirebaseOperationResult(isUploadSuccessful, null)
+                    _firebaseOperationResult.value = FirebaseOperationResult(isUploadSuccessful, errorMessage)
                 }
         } else {
             isUploadSuccessful = false
@@ -38,11 +39,15 @@ class FirebaseStorageRepository @Inject constructor(firebaseStorage: FirebaseSto
         }
     }
 
-    fun getProfilePictureUri(phoneNumber: String, callback: (Uri) -> Unit) {
+    fun getProfilePictureUri(phoneNumber: String, callback: (Uri?) -> Unit) {
         val profilePicturesRef = storageRef.child(PROFILE_PICTURES)
         val pictureRef = profilePicturesRef.child(phoneNumber)
         pictureRef.downloadUrl.addOnSuccessListener {
             callback(it)
+        }.addOnFailureListener {
+            Log.w("mKm -test", it.message.toString())
+            Log.w("mKm -test", phoneNumber)
+            callback(null)
         }
     }
 

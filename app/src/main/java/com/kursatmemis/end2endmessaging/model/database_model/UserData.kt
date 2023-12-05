@@ -12,6 +12,5 @@ data class UserData(
     val status: String? = null,
     val photoUrl: String? = null,
     val publicKey: String? = null,
-    val token: String? = null,
-    val contactList: ArrayList<String> = ArrayList()
+    val token: String? = null
 )

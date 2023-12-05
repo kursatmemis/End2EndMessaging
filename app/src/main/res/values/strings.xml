@@ -27,11 +27,16 @@
     <string name="camerapicture">cameraPicture</string>
     <string name="count_timer">Count Timer</string>
     <string name="resend_code">Resend Code</string>
-    <string name="people">People</string>
+    <string name="contact">Contact</string>
     <string name="person_icon">Person Icon</string>
     <string name="surname">Surname</string>
     <string name="phone_icon">Phone Icon</string>
     <string name="save_person">Save Person</string>
     <string name="full_name">Full Name</string>
     <string name="profile_image">Profile Image</string>
+    <string name="message">Message</string>
+    <string name="message_sender">Message Sender</string>
+    <string name="left_chat_message">Left Chat Message</string>
+    <string name="right_chat_message">Right Chat Message</string>
+    <string name="last_message">Last Message</string>
 </resources>

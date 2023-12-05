@@ -6,8 +6,6 @@ import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.navigation.Navigation
 import com.google.android.material.snackbar.Snackbar
-import com.google.firebase.auth.ktx.auth
-import com.google.firebase.ktx.Firebase
 import com.kursatmemis.end2endmessaging.R
 import com.kursatmemis.end2endmessaging.databinding.FragmentAddNewPersonBinding
 import com.kursatmemis.end2endmessaging.util.areParamsEmpty
@@ -25,7 +23,7 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class AddNewContactFragment : BaseFragment<FragmentAddNewPersonBinding>() {
 
-    private val addNewPersonViewModel: AddNewPersonViewModel by viewModels()
+    private val addNewContactViewModel: AddNewPersonViewModel by viewModels()
 
     override fun createBindingObject(
         inflater: LayoutInflater,
@@ -41,7 +39,8 @@ class AddNewContactFragment : BaseFragment<FragmentAddNewPersonBinding>() {
         binding.savePersonButton.setOnClickListener {
             closeKeyboard(requireActivity(), requireContext())
             val phoneNumber = binding.phoneNumberEditText.text.toString()
-            val isEmpty = areParamsEmpty(phoneNumber)
+            val phoneNumberWithoutSpaces = phoneNumber.filter { !it.isWhitespace() }
+            val isEmpty = areParamsEmpty(phoneNumberWithoutSpaces)
             if (isEmpty) {
                 showSnackBar(
                     binding.root,
@@ -52,9 +51,8 @@ class AddNewContactFragment : BaseFragment<FragmentAddNewPersonBinding>() {
                 )
             } else {
                 showProgressBar(binding.progressBar3)
-                val person = getPerson()
-                val currentPhoneNumber = Firebase.auth.currentUser!!.phoneNumber!!
-                addNewPersonViewModel.addNewContactToContactList(person, currentPhoneNumber)
+                val contact = getContact(phoneNumberWithoutSpaces)
+                addNewContactViewModel.addNewContactToContactList(contact)
             }
 
         }
@@ -63,7 +61,7 @@ class AddNewContactFragment : BaseFragment<FragmentAddNewPersonBinding>() {
     }
 
     private fun observeLiveData() {
-        addNewPersonViewModel.saveUserDataResult.observe(viewLifecycleOwner) {
+        addNewContactViewModel.saveContactResult.observe(viewLifecycleOwner) {
             val isSaveUserSuccess = it.isSuccessful
             if (isSaveUserSuccess) {
                 showToastMessage(
@@ -71,7 +69,7 @@ class AddNewContactFragment : BaseFragment<FragmentAddNewPersonBinding>() {
                     "The person added!",
                     Toast.LENGTH_LONG
                 )
-                navigateToPeopleFragment()
+                navigateToContactFragment()
             } else {
                 val errorMessage = it.errorMessage!!
                 showSnackBar(
@@ -84,17 +82,16 @@ class AddNewContactFragment : BaseFragment<FragmentAddNewPersonBinding>() {
         }
     }
 
-    private fun navigateToPeopleFragment() {
+    private fun navigateToContactFragment() {
         Navigation.findNavController(binding.root)
             .navigate(R.id.action_addNewPersonFragment_to_peopleFragment)
     }
 
-    private fun getPerson(): Contact {
+    private fun getContact(phoneNumberWithoutSpaces: String): Contact {
         val name = binding.nameEditText.text.toString()
         val surname = binding.surnameEditText.text.toString()
         val areaCode = binding.countryCodePicker.selectedCountryCode
-        val phoneNumber = binding.phoneNumberEditText.text.toString()
-        val fullPhoneNumber = "+$areaCode$phoneNumber"
+        val fullPhoneNumber = "+$areaCode$phoneNumberWithoutSpaces"
         return Contact(name, surname, fullPhoneNumber)
     }
 

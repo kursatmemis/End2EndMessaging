@@ -4,10 +4,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".view.main.fragment.PeopleFragment">
+    tools:context=".view.main.fragment.ContactFragment">
 
     <ListView
-        android:id="@+id/peopleListView"
+        android:id="@+id/contact_list_view"
         android:layout_width="0dp"
         android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -26,7 +26,7 @@
         android:src="@drawable/ic_add_person"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:contentDescription="@string/people" />
+        android:contentDescription="@string/contact" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

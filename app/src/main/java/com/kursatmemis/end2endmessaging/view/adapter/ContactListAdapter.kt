@@ -37,6 +37,7 @@ class ContactListAdapter @Inject constructor(
 
         firebaseStorageRepository.getProfilePictureUri(person.phoneNumber!!) { uri ->
             val imageUrl = uri.toString()
+            person.imageUri = imageUrl
             binding.profileImageImageView.downloadFromUrl(
                 imageUrl,
                 buildProgressDrawable(context)
@@ -50,6 +51,10 @@ class ContactListAdapter @Inject constructor(
         clear()
         addAll(newContactList)
         notifyDataSetChanged()
+    }
+
+    fun getContactList() : ArrayList<Contact> {
+        return this.contactList
     }
 
 }

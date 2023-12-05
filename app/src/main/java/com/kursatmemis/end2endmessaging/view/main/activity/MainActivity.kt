@@ -28,8 +28,8 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        auth = Firebase.auth
-        setSupportActionBar(binding.toolbar)
+        /*auth = Firebase.auth
+        setSupportActionBar(binding.toolbar)*/
 
         val navHostFragment =
             supportFragmentManager.findFragmentById(R.id.navHostFragment) as NavHostFragment
@@ -38,7 +38,7 @@ class MainActivity : AppCompatActivity() {
 
     }
 
-    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+    /*override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         val menuInflater: MenuInflater = menuInflater
         menuInflater.inflate(R.menu.option_menu, menu)
         return true
@@ -62,6 +62,6 @@ class MainActivity : AppCompatActivity() {
     private fun goToRegisterActivity() {
         val intentToRegisterAcitivty = Intent(this, RegisterActivity::class.java)
         startActivity(intentToRegisterAcitivty)
-    }
+    }*/
 
 }

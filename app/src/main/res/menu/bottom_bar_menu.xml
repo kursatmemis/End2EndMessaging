@@ -8,9 +8,9 @@
         android:title="@string/chat" />
 
     <item
-        android:id="@+id/peopleFragment"
+        android:id="@+id/contactFragment"
         android:icon="@drawable/ic_people"
-        android:title="@string/people" />
+        android:title="@string/contact" />
 
     <item
         android:id="@+id/settingsFragment"

@@ -2,6 +2,7 @@ package com.kursatmemis.end2endmessaging.util.userfeedback
 
 import android.content.Context
 import android.content.DialogInterface
+import android.util.Log
 import androidx.appcompat.app.AlertDialog
 
 data class AlertDialogButton(
@@ -33,8 +34,9 @@ fun showAlertDialog(context: Context, title: String, message: String, alertDialo
     if (alertDialogButton.negativeButton != null) {
         val text = alertDialogButton.negativeButton.negativeButtonText
         val listener = alertDialogButton.negativeButton.negativeButtonListener
-        alertDialogBuilder.setPositiveButton(text, listener)
+        alertDialogBuilder.setNegativeButton(text, listener)
     }
 
+    alertDialogBuilder.show()
 
 }

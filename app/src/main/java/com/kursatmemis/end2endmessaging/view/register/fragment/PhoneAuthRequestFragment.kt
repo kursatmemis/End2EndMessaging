@@ -36,12 +36,13 @@ class PhoneAuthRequestFragment : BaseFragment<FragmentPhoneAuthRequestBinding>()
             closeKeyboard(requireActivity(), requireContext())
             val areaCode = binding.countryCodePicker.selectedCountryCode!!
             val phoneNumber = binding.phoneNumberEditText.text.toString()
-            val isEmpty = areParamsEmpty(phoneNumber)
+            val phoneNumberWithoutSpaces = phoneNumber.filter { !it.isWhitespace() }
+            val isEmpty = areParamsEmpty(phoneNumberWithoutSpaces)
             if (isEmpty) {
                 showToastMessage(requireContext(), "Please enter a phone number!")
             } else {
                 showProgressBar(binding.progressBar)
-                fullPhoneNumber = "+$areaCode$phoneNumber"
+                fullPhoneNumber = "+$areaCode$phoneNumberWithoutSpaces"
                 phoneAuthRequestViewModel.verifyPhoneNumber(fullPhoneNumber, requireActivity())
             }
         }
@@ -78,7 +79,6 @@ class PhoneAuthRequestFragment : BaseFragment<FragmentPhoneAuthRequestBinding>()
             if (isSignInSuccessful) {
                 // Telefon numarasını doğrulamak için kod göndermeye gerek kalmadı.
                 navigateToProfileSetupFragment()
-                requireActivity().finish()
             } else {
                 val errorMessage = it.errorMessage!!
                 showToastMessage(requireContext(), errorMessage)
