@@ -7,6 +7,7 @@ import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.provider.MediaStore
+import android.util.Base64
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -35,9 +36,15 @@ import com.kursatmemis.end2endmessaging.view.BaseFragment
 import com.kursatmemis.end2endmessaging.view.main.activity.MainActivity
 import com.kursatmemis.end2endmessaging.viewmodel.authentication.ProfileSetupViewModel
 import dagger.hilt.android.AndroidEntryPoint
+import org.bouncycastle.crypto.AsymmetricCipherKeyPair
+import java.security.KeyPair
+import java.security.KeyPairGenerator
+import java.security.interfaces.RSAPrivateKey
+import java.security.interfaces.RSAPublicKey
 
 @AndroidEntryPoint
 class ProfileSetupFragment : BaseFragment<FragmentProfileSetupBinding>() {
+
 
     private val profileSetupViewModel: ProfileSetupViewModel by viewModels()
     private lateinit var imagePicker: ImagePickerFromGallery
@@ -45,6 +52,8 @@ class ProfileSetupFragment : BaseFragment<FragmentProfileSetupBinding>() {
     private lateinit var permissionLauncher: ActivityResultLauncher<String>
     private lateinit var phoneNumber: String
     private var imageUri: Uri? = null
+    private lateinit var keyPair: KeyPair
+
     // Back tuşuna basıldığında tetiklenen işlemi yöneten bir geri çağırma
     private lateinit var backPressHandler: OnBackPressedCallback
 
@@ -166,11 +175,26 @@ class ProfileSetupFragment : BaseFragment<FragmentProfileSetupBinding>() {
     }
 
     private fun saveUserDataAndProfilePictureToFirebase(userData: UserData) {
-        profileSetupViewModel.saveProfilePictureToFirebaseStorage(imageUri, phoneNumber)
-        profileSetupViewModel.saveUserDataToFirebaseStore(userData)
+        try {
+            profileSetupViewModel.saveProfilePictureToFirebaseStorage(imageUri, phoneNumber)
+            profileSetupViewModel.saveUserDataToFirebaseStore(userData)
+        } catch (e: Exception) {
+            Log.w("mKm - krst", e.toString())
+        }
     }
 
     private fun getUserData(): UserData {
+
+        // Anahtar çiftini oluştur
+        val keyPairGenerator = KeyPairGenerator.getInstance("RSA")
+        keyPairGenerator.initialize(2048)
+        val keyPair = keyPairGenerator.genKeyPair()
+
+        val publicKeyString = Base64.encodeToString(keyPair.public.encoded, Base64.NO_WRAP)
+        val privateKeyString = Base64.encodeToString(keyPair.private.encoded, Base64.NO_WRAP)
+
+
+
         val id = phoneNumber
         val phoneNumber = phoneNumber
         val createdAt = Timestamp.now()
@@ -179,7 +203,6 @@ class ProfileSetupFragment : BaseFragment<FragmentProfileSetupBinding>() {
         val lastSeen = Timestamp.now()
         val status = "online"
         val photoUrl = imageUri.toString()
-        val publicKey = "publicKey"
         val token = "token"
 
         return UserData(
@@ -191,8 +214,9 @@ class ProfileSetupFragment : BaseFragment<FragmentProfileSetupBinding>() {
             lastSeen,
             status,
             photoUrl,
-            publicKey,
-            token
+            publicKeyString,
+            token,
+            privateKeyString
         )
 
     }

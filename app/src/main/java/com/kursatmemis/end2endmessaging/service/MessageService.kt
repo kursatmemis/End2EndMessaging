@@ -48,13 +48,13 @@ class MessageService @Inject constructor(
         messageRefCollection.parent?.get()?.addOnSuccessListener {
             val createdAt = it.get("createdAt") as Timestamp?
             if (createdAt == null) {
-                val lastMessage = message.messageText
-                val chatInfo = ChatInfo(Timestamp.now(), lastMessage)
-                messageRefCollection.parent?.set(chatInfo)
+                // val lastMessage = message.messageText
+                // val chatInfo = ChatInfo(Timestamp.now(), lastMessage)
+                // messageRefCollection.parent?.set(chatInfo)
             } else {
-                val lastMessage = message.messageText
-                val chatInfo = ChatInfo(createdAt, lastMessage)
-                messageRefCollection.parent?.set(chatInfo)
+                // val lastMessage = message.messageText
+                // val chatInfo = ChatInfo(createdAt, lastMessage)
+                // messageRefCollection.parent?.set(chatInfo)
             }
         }
     }
@@ -64,9 +64,6 @@ class MessageService @Inject constructor(
             firestoreRefManager.getMessageCollectionRef(senderPhoneNumber, receiverPhoneNumber)
         val receiverMessagesRef =
             firestoreRefManager.getMessageCollectionRef(receiverPhoneNumber, senderPhoneNumber)
-
-        Log.w("mKm - chatChannel", "getMessageListBetweenUsers")
-        Log.w("mKm - deneme", "receiver: $receiverPhoneNumber")
 
         senderMessagesRef.orderBy("createdAt", Query.Direction.ASCENDING)
             .addSnapshotListener { value, error ->

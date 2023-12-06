@@ -33,13 +33,15 @@ class MessageListAdapter @Inject constructor(
         binding = ItemMessageBinding.inflate(layoutInflater, parent, false)
 
         val message = messageList[position]
-        val messageText = message.messageText
+        val messageText: String
 
         if (message.senderId == Firebase.auth.currentUser!!.phoneNumber) {
             binding.leftChatLayout.visibility = View.INVISIBLE
+            messageText = message.messageTextForSender ?: "null, MessageListAdapter'a bak"
             binding.rightChatTextview.text = messageText
         } else {
             binding.rightChatLayout.visibility = View.INVISIBLE
+            messageText = message.messageTextForReceiver ?: "null, MessageListAdapter'a bak"
             binding.leftChatTextview.text = messageText
         }
 
